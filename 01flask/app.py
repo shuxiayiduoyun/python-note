@@ -17,6 +17,6 @@ app = Flask(__name__)
 def hello_flask():
     return 'hello flask'
 
-
-if __name__ == '__main__':
-    app.run()
+# v1.0之后的版本，不推荐的写法
+# if __name__ == '__main__':
+#     app.run()
