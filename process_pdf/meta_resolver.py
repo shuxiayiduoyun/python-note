@@ -35,6 +35,7 @@ _CROSSREF_API = "https://api.crossref.org/works"
 _DOI_BASE = "https://doi.org/"
 _ARXIV_API = "http://export.arxiv.org/api/query"  # Atom
 
+
 # ------------------------ Utilities ------------------------
 
 def _headers(contact_email: Optional[str] = None, accept_json=True) -> Dict[str, str]:
@@ -46,12 +47,14 @@ def _headers(contact_email: Optional[str] = None, accept_json=True) -> Dict[str,
         headers["Accept"] = "application/json"
     return headers
 
+
 def _clean_text(s: Optional[str]) -> str:
     if not s:
         return ""
     s = html.unescape(s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
+
 
 def _clean_abstract(s: Optional[str]) -> str:
     if not s:
@@ -61,6 +64,7 @@ def _clean_abstract(s: Optional[str]) -> str:
     s = re.sub(r"</?[^>]+>", " ", s)
     return _clean_text(s)
 
+
 def _norm_year(y) -> Optional[int]:
     try:
         y = int(str(y)[:4])
@@ -69,6 +73,7 @@ def _norm_year(y) -> Optional[int]:
     except Exception:
         pass
     return None
+
 
 def _format_authors_cr(auth: Any) -> List[str]:
     out = []
@@ -84,6 +89,7 @@ def _format_authors_cr(auth: Any) -> List[str]:
         elif given:
             out.append(given)
     return out
+
 
 # ------------------------ DOI path ------------------------
 
@@ -101,7 +107,8 @@ def _get_metadata_from_doi(doi: str, contact_email: Optional[str] = None) -> Opt
             timeout=(8, 15),
             allow_redirects=True,
         )
-        if r.status_code == 200 and r.headers.get("Content-Type", "").startswith(("application/vnd.citationstyles", "application/json")):
+        if r.status_code == 200 and r.headers.get("Content-Type", "").startswith(
+                ("application/vnd.citationstyles", "application/json")):
             d = r.json()
             title = d.get("title") or ""
             if isinstance(title, list):
@@ -169,6 +176,7 @@ def _get_metadata_from_doi(doi: str, contact_email: Optional[str] = None) -> Opt
 
     return None
 
+
 # ------------------------ arXiv path ------------------------
 
 _ARXIV_ID_RE = re.compile(
@@ -183,6 +191,7 @@ _ARXIV_ID_RE = re.compile(
     """
 )
 
+
 def _extract_arxiv_id(s: str) -> Optional[str]:
     s = s.strip()
     m = _ARXIV_ID_RE.search(s)
@@ -195,6 +204,7 @@ def _extract_arxiv_id(s: str) -> Optional[str]:
         return s.split("v")[0]
     return None
 
+
 def _get_metadata_from_arxiv(url_or_id: str) -> Optional[Dict[str, Any]]:
     aid = _extract_arxiv_id(url_or_id)
     if not aid:
@@ -202,7 +212,7 @@ def _get_metadata_from_arxiv(url_or_id: str) -> Optional[Dict[str, Any]]:
     params = {"id_list": aid}
     try:
         r = requests.get(_ARXIV_API, params=params, timeout=(8, 15),
-                         headers=_headers(accept_json=False))
+                    headers=_headers(accept_json=False))
         if r.status_code != 200:
             return None
         root = ET.fromstring(r.text)
@@ -242,9 +252,11 @@ def _get_metadata_from_arxiv(url_or_id: str) -> Optional[Dict[str, Any]]:
     except Exception:
         return None
 
+
 # ------------------------ Generic URL path ------------------------
 
 _DOI_RE = re.compile(r"\b(10\.\d{4,9}/[-._;()/:A-Z0-9]+)\b", re.I)
+
 
 def _extract_doi_from_url(url: str) -> Optional[str]:
     # https://doi.org/xxx
@@ -252,6 +264,7 @@ def _extract_doi_from_url(url: str) -> Optional[str]:
     if m:
         return m.group(1)
     return None
+
 
 def _find_doi_in_html(soup: BeautifulSoup) -> Optional[str]:
     # Highwire/CSL/DC 常见位置
@@ -265,6 +278,7 @@ def _find_doi_in_html(soup: BeautifulSoup) -> Optional[str]:
     # 正则兜底
     m = _DOI_RE.search(soup.get_text(" ", strip=True))
     return m.group(1) if m else None
+
 
 def _get_metadata_from_generic_url(url: str, contact_email: Optional[str]) -> Optional[Dict[str, Any]]:
     try:
@@ -292,7 +306,8 @@ def _get_metadata_from_generic_url(url: str, contact_email: Optional[str]) -> Op
 
     title = _meta_first(["citation_title", "dc.title", "og:title"]) or (soup.title.string.strip() if soup.title else "")
     abstract = _meta_first(["citation_abstract", "dc.description", "og:description"])
-    container = _meta_first(["citation_journal_title", "citation_conference_title", "prism.publicationName", "dc.source"])
+    container = _meta_first(
+        ["citation_journal_title", "citation_conference_title", "prism.publicationName", "dc.source"])
     # authors: 多值
     authors = []
     for tag in soup.find_all("meta", attrs={"name": "citation_author"}):
@@ -321,12 +336,14 @@ def _get_metadata_from_generic_url(url: str, contact_email: Optional[str]) -> Op
         "source": "html-meta"
     }
 
+
 # ------------------------ Public entry ------------------------
 
-def get_metadata(doi: Optional[str] = None, url: Optional[str] = None, contact_email: Optional[str] = None) -> Dict[str, Any]:
+def get_metadata(doi: Optional[str] = None, url: Optional[str] = None, contact_email: Optional[str] = None) -> Dict[
+    str, Any]:
     """
     Return a normalized metadata dict:
-      {title, authors, year, container, abstract, doi, url, source}
+        {title, authors, year, container, abstract, doi, url, source}
     """
     # 1) explicit DOI
     if doi:
