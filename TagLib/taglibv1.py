@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
         MainWindow.setFont(font)
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("D:/Pictures/icos/logo.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap("./pics/logo.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
