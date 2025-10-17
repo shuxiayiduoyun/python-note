@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
 
         # 设置窗口图标
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./pics/logo.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap("pics/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         MainWindow.setWindowIcon(icon)
 
         # 创建中央部件
@@ -280,15 +280,15 @@ class Ui_MainWindow(object):
 
         # 添加类型选项图标
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("./pics/journal.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap("pics/journal.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.comboBox.addItem(icon1, "")
 
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("./pics/preprint.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap("pics/preprint.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.comboBox.addItem(icon2, "")
 
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("./pics/conference.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap("pics/conference.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.comboBox.addItem(icon3, "")
 
         self.horizontalLayout_5.addWidget(self.comboBox)
@@ -484,28 +484,28 @@ class Ui_MainWindow(object):
         # 新建动作
         self.action = QtWidgets.QAction(MainWindow)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("./pics/new.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("pics/new.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action.setIcon(icon4)
         self.action.setObjectName("action")
 
         # 打开文件夹动作
         self.action_2 = QtWidgets.QAction(MainWindow)
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("./pics/open.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon5.addPixmap(QtGui.QPixmap("pics/open.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.action_2.setIcon(icon5)
         self.action_2.setObjectName("action_2")
 
         # 保存动作
         self.action_3 = QtWidgets.QAction(MainWindow)
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("./pics/save.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon6.addPixmap(QtGui.QPixmap("pics/save.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.action_3.setIcon(icon6)
         self.action_3.setObjectName("action_3")
 
         # 回收站动作
         self.action_4 = QtWidgets.QAction(MainWindow)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("./pics/bin.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon7.addPixmap(QtGui.QPixmap("pics/bin.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.action_4.setIcon(icon7)
         self.action_4.setObjectName("action_4")
 
