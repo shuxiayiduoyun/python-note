@@ -230,11 +230,11 @@ class Ui_MainWindow(QObject):
         self.label.setObjectName("label")
         self.horizontalLayout_3.addWidget(self.label)
 
-        # self.text_title = QtWidgets.QLineEdit(self.tab_info)
         self.text_title = QtWidgets.QTextEdit(self.tab_info)
         self.text_title.setObjectName("line_title")
         self.text_title.setPlaceholderText("输入文献标题...")
         self.text_title.setMaximumHeight(70)
+        self.text_title.setAcceptRichText(False)
         self.text_title.textChanged.connect(lambda: self.adjust_text_height(self.text_title))
 
         self.horizontalLayout_3.addWidget(self.text_title)
@@ -251,12 +251,12 @@ class Ui_MainWindow(QObject):
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_13.addWidget(self.label_12)
 
-        # self.line_title_2 = QtWidgets.QLineEdit(self.tab_info)
         self.line_title_2 = QtWidgets.QTextEdit(self.tab_info)
         self.line_title_2.setObjectName("line_title_2")
         self.line_title_2.setPlaceholderText("输入中文标题...")
         self.horizontalLayout_13.addWidget(self.line_title_2)
         self.line_title_2.setMaximumHeight(70)
+        self.line_title_2.setAcceptRichText(False)
         self.line_title_2.textChanged.connect(lambda: self.adjust_text_height(self.line_title_2))
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_13)
@@ -504,6 +504,7 @@ class Ui_MainWindow(QObject):
         font.setPointSize(10)
         self.toolBar.setFont(font)
         self.toolBar.setObjectName("toolBar")
+        self.toolBar.setMovable(False)
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
 
         # 创建工具栏动作
@@ -517,6 +518,9 @@ class Ui_MainWindow(QObject):
         self.toolBar.addAction(self.action_4)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.action_5)
+
+        # 添加搜索框和搜索按钮
+        self._add_search_widgets()
 
     def _create_toolbar_actions(self, MainWindow):
         """创建工具栏动作项"""
@@ -555,6 +559,38 @@ class Ui_MainWindow(QObject):
         font.setPointSize(11)
         self.action_5.setFont(font)
         self.action_5.setObjectName("action_5")
+
+    def _add_search_widgets(self):
+        """在工具栏中添加搜索框和搜索按钮"""
+        # 添加一个可伸缩的空间，将搜索控件推到工具栏右侧
+        spacer = QtWidgets.QWidget()
+        spacer.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.toolBar.addWidget(spacer)
+
+        # 添加搜索标签
+        search_label = QtWidgets.QLabel("搜索:")
+        self.toolBar.addWidget(search_label)
+
+        # 添加搜索框
+        self.searchLineEdit = QtWidgets.QLineEdit()
+        self.searchLineEdit.setPlaceholderText("请输入搜索内容...")
+        self.searchLineEdit.setMaximumWidth(200)
+        self.toolBar.addWidget(self.searchLineEdit)
+
+        # 添加搜索按钮
+        self.searchButton = QtWidgets.QPushButton()
+        # 设置搜索按钮图标
+        search_icon = QtGui.QIcon()
+        search_icon.addPixmap(QtGui.QPixmap("pics/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.searchButton.setIcon(search_icon)
+        self.searchButton.clicked.connect(self.perform_search)
+        self.toolBar.addWidget(self.searchButton)
+
+    def perform_search(self):
+        """执行搜索操作"""
+        search_text = self.searchLineEdit.text()
+        # 这里添加实际的搜索逻辑
+        print(f"搜索内容: {search_text}")
 
 
     def retranslateUi(self, MainWindow):
@@ -596,7 +632,7 @@ class Ui_MainWindow(QObject):
         self.action_3.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.action_4.setText(_translate("MainWindow", "回收站"))
         self.action_4.setShortcut(_translate("MainWindow", "Ctrl+D"))
-        self.action_5.setText(_translate("MainWindow", "搜索:"))
+        # self.action_5.setText(_translate("MainWindow", "搜索:"))
 
     def adjust_text_height(self, text_edit=None):
         """
