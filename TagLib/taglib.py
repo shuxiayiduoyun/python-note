@@ -234,15 +234,11 @@ class Ui_MainWindow(QObject):
         self.text_title = QtWidgets.QTextEdit(self.tab_info)
         self.text_title.setObjectName("line_title")
         self.text_title.setPlaceholderText("输入文献标题...")
+        self.text_title.setMaximumHeight(70)
         self.text_title.textChanged.connect(lambda: self.adjust_text_height(self.text_title))
 
         self.horizontalLayout_3.addWidget(self.text_title)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
-
-    # def adjust_text_height(self):
-    #     new_height = self.text_title.verticalScrollBar().maximum() - self.text_title.verticalScrollBar().minimum() + self.text_title.verticalScrollBar().pageStep()
-    #     print(new_height)
-    #     self.text_title.setFixedHeight(new_height)
 
     def _create_chinese_title_row(self):
         """创建中文标题输入行"""
@@ -258,7 +254,9 @@ class Ui_MainWindow(QObject):
         # self.line_title_2 = QtWidgets.QLineEdit(self.tab_info)
         self.line_title_2 = QtWidgets.QTextEdit(self.tab_info)
         self.line_title_2.setObjectName("line_title_2")
+        self.line_title_2.setPlaceholderText("输入中文标题...")
         self.horizontalLayout_13.addWidget(self.line_title_2)
+        self.line_title_2.setMaximumHeight(70)
         self.line_title_2.textChanged.connect(lambda: self.adjust_text_height(self.line_title_2))
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_13)
@@ -342,6 +340,7 @@ class Ui_MainWindow(QObject):
 
         self.comboBox_zky = QtWidgets.QComboBox(self.tab_info)
         self.comboBox_zky.setObjectName("line_zky")
+        self.comboBox_zky.addItem("XXXXX")
         icon_zky1 = QtGui.QIcon()
         icon_zky1.addPixmap(QtGui.QPixmap("pics/yiqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.comboBox_zky.addItem(icon_zky1, "中科院一区")
@@ -354,7 +353,6 @@ class Ui_MainWindow(QObject):
         icon_zky4 = QtGui.QIcon()
         icon_zky4.addPixmap(QtGui.QPixmap("pics/siqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.comboBox_zky.addItem(icon_zky4, "中科院四区")
-        self.comboBox_zky.addItem("XXXXX")
         self.horizontalLayout_7.addWidget(self.comboBox_zky)
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
 
@@ -372,9 +370,9 @@ class Ui_MainWindow(QObject):
         self.comboBox_ccf = QtWidgets.QComboBox(self.tab_info)
         self.comboBox_ccf.setObjectName("line_ccf")
 
-        items = ['CCFA', 'CCFB', 'CCFC', 'XXXXX']
+        items = ['XXXXX', 'CCFA', 'CCFB', 'CCFC']
         for idx, text in enumerate(items):
-            if idx < 3:
+            if idx > 0:
                 icon_ccf = QtGui.QIcon()
                 icon_ccf.addPixmap(QtGui.QPixmap(f"pics/{text.lower()}.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
                 self.comboBox_ccf.addItem(icon_ccf, f' ---{text}---')
@@ -398,7 +396,7 @@ class Ui_MainWindow(QObject):
 
         self.comboBox_jcr = QtWidgets.QComboBox(self.tab_info)
         self.comboBox_jcr.setObjectName("line_jcr")
-        items_jcr = ['Q1', 'Q2', 'Q3', 'Q4', 'XXXXX']
+        items_jcr = ['XXXXX', 'Q1', 'Q2', 'Q3', 'Q4']
         for idx, text in enumerate(items_jcr):
             self.comboBox_jcr.addItem(f' ---{text}---')
         self.horizontalLayout_9.addWidget(self.comboBox_jcr)
