@@ -8,13 +8,19 @@
 @Date    ：2025/10/17 20:28 
 '''
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt, QObject
+from PyQt5.QtGui import QTextOption
+from PyQt5.QtWidgets import QTextBrowser, QVBoxLayout, QWidget, QTextEdit
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QObject):
     """
     主窗口UI类
     负责创建和管理主窗口的所有UI组件
     """
+
+    def __init__(self):
+        super().__init__()
 
     def setupUi(self, MainWindow):
         """
@@ -224,11 +230,13 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.horizontalLayout_3.addWidget(self.label)
 
-        self.line_title = QtWidgets.QLineEdit(self.tab_info)
-        self.line_title.setObjectName("line_title")
-        self.horizontalLayout_3.addWidget(self.line_title)
+        self.text_title = QtWidgets.QLineEdit(self.tab_info)
+        self.text_title.setObjectName("line_title")
+        self.text_title.setPlaceholderText("输入文献标题...")
 
+        self.horizontalLayout_3.addWidget(self.text_title)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+
 
     def _create_chinese_title_row(self):
         """创建中文标题输入行"""
@@ -517,6 +525,7 @@ class Ui_MainWindow(object):
         self.action_5.setFont(font)
         self.action_5.setObjectName("action_5")
 
+
     def retranslateUi(self, MainWindow):
         """
         重新翻译UI文本（国际化支持）
@@ -557,3 +566,4 @@ class Ui_MainWindow(object):
         self.action_4.setText(_translate("MainWindow", "回收站"))
         self.action_4.setShortcut(_translate("MainWindow", "Ctrl+D"))
         self.action_5.setText(_translate("MainWindow", "搜索:"))
+
