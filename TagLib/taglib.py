@@ -9,7 +9,7 @@
 '''
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QObject
-from PyQt5.QtGui import QTextOption
+from PyQt5.QtGui import QTextOption, QColor
 from PyQt5.QtWidgets import QTextBrowser, QVBoxLayout, QWidget, QTextEdit
 
 
@@ -230,13 +230,19 @@ class Ui_MainWindow(QObject):
         self.label.setObjectName("label")
         self.horizontalLayout_3.addWidget(self.label)
 
-        self.text_title = QtWidgets.QLineEdit(self.tab_info)
+        # self.text_title = QtWidgets.QLineEdit(self.tab_info)
+        self.text_title = QtWidgets.QTextEdit(self.tab_info)
         self.text_title.setObjectName("line_title")
         self.text_title.setPlaceholderText("输入文献标题...")
+        self.text_title.textChanged.connect(lambda: self.adjust_text_height(self.text_title))
 
         self.horizontalLayout_3.addWidget(self.text_title)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
+    # def adjust_text_height(self):
+    #     new_height = self.text_title.verticalScrollBar().maximum() - self.text_title.verticalScrollBar().minimum() + self.text_title.verticalScrollBar().pageStep()
+    #     print(new_height)
+    #     self.text_title.setFixedHeight(new_height)
 
     def _create_chinese_title_row(self):
         """创建中文标题输入行"""
@@ -249,9 +255,11 @@ class Ui_MainWindow(QObject):
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_13.addWidget(self.label_12)
 
-        self.line_title_2 = QtWidgets.QLineEdit(self.tab_info)
+        # self.line_title_2 = QtWidgets.QLineEdit(self.tab_info)
+        self.line_title_2 = QtWidgets.QTextEdit(self.tab_info)
         self.line_title_2.setObjectName("line_title_2")
         self.horizontalLayout_13.addWidget(self.line_title_2)
+        self.line_title_2.textChanged.connect(lambda: self.adjust_text_height(self.line_title_2))
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_13)
 
@@ -332,10 +340,22 @@ class Ui_MainWindow(QObject):
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_7.addWidget(self.label_5)
 
-        self.line_zky = QtWidgets.QLineEdit(self.tab_info)
-        self.line_zky.setObjectName("line_zky")
-        self.horizontalLayout_7.addWidget(self.line_zky)
-
+        self.comboBox_zky = QtWidgets.QComboBox(self.tab_info)
+        self.comboBox_zky.setObjectName("line_zky")
+        icon_zky1 = QtGui.QIcon()
+        icon_zky1.addPixmap(QtGui.QPixmap("pics/yiqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.comboBox_zky.addItem(icon_zky1, "中科院一区")
+        icon_zky2 = QtGui.QIcon()
+        icon_zky2.addPixmap(QtGui.QPixmap("pics/erqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.comboBox_zky.addItem(icon_zky2, "中科院二区")
+        icon_zky3 = QtGui.QIcon()
+        icon_zky3.addPixmap(QtGui.QPixmap("pics/sanqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.comboBox_zky.addItem(icon_zky3, "中科院三区")
+        icon_zky4 = QtGui.QIcon()
+        icon_zky4.addPixmap(QtGui.QPixmap("pics/siqu.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.comboBox_zky.addItem(icon_zky4, "中科院四区")
+        self.comboBox_zky.addItem("XXXXX")
+        self.horizontalLayout_7.addWidget(self.comboBox_zky)
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
 
     def _create_ccf_row(self):
@@ -349,9 +369,19 @@ class Ui_MainWindow(QObject):
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_8.addWidget(self.label_6)
 
-        self.line_ccf = QtWidgets.QLineEdit(self.tab_info)
-        self.line_ccf.setObjectName("line_ccf")
-        self.horizontalLayout_8.addWidget(self.line_ccf)
+        self.comboBox_ccf = QtWidgets.QComboBox(self.tab_info)
+        self.comboBox_ccf.setObjectName("line_ccf")
+
+        items = ['CCFA', 'CCFB', 'CCFC', 'XXXXX']
+        for idx, text in enumerate(items):
+            if idx < 3:
+                icon_ccf = QtGui.QIcon()
+                icon_ccf.addPixmap(QtGui.QPixmap(f"pics/{text.lower()}.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+                self.comboBox_ccf.addItem(icon_ccf, f' ---{text}---')
+            else:
+                self.comboBox_ccf.addItem(text)
+
+        self.horizontalLayout_8.addWidget(self.comboBox_ccf)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_8)
 
@@ -366,9 +396,12 @@ class Ui_MainWindow(QObject):
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_9.addWidget(self.label_7)
 
-        self.line_jcr = QtWidgets.QLineEdit(self.tab_info)
-        self.line_jcr.setObjectName("line_jcr")
-        self.horizontalLayout_9.addWidget(self.line_jcr)
+        self.comboBox_jcr = QtWidgets.QComboBox(self.tab_info)
+        self.comboBox_jcr.setObjectName("line_jcr")
+        items_jcr = ['Q1', 'Q2', 'Q3', 'Q4', 'XXXXX']
+        for idx, text in enumerate(items_jcr):
+            self.comboBox_jcr.addItem(f' ---{text}---')
+        self.horizontalLayout_9.addWidget(self.comboBox_jcr)
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_9)
 
@@ -567,3 +600,22 @@ class Ui_MainWindow(QObject):
         self.action_4.setShortcut(_translate("MainWindow", "Ctrl+D"))
         self.action_5.setText(_translate("MainWindow", "搜索:"))
 
+    def adjust_text_height(self, text_edit=None):
+        """
+        通用的文本框高度调整槽函数
+        根据内容自动调整QTextEdit控件的高度
+
+        Args:
+            text_edit: 需要调整高度的QTextEdit控件，如果为None则使用self.text_title
+        """
+        if text_edit is None:
+            text_edit = self.text_title
+
+        # 正确计算内容高度
+        document_height = text_edit.document().size().height()
+        margins = text_edit.contentsMargins()
+        frame_width = text_edit.frameWidth()
+
+        # 设置合适的高度（考虑边距和边框）
+        new_height = int(document_height) + margins.top() + margins.bottom() + 2 * frame_width
+        text_edit.setFixedHeight(min(new_height, 50))  # 设置最小高度为50
