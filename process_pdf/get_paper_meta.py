@@ -104,11 +104,11 @@ def get_metadata(doi=None, url=None):
 
 # 测试示例
 if __name__ == "__main__":
-    doi = "10.1080/00051144.2025.2480423"  # 输入一个 DOI 进行测试
+    doi = "10.1002/widm.70024"  # 输入一个 DOI 进行测试
     url = "https://www.tandfonline.com/doi/full/10.1080/00051144.2025.2480423"  # 或者输入文献的网址
 
-    # metadata = get_metadata(doi=doi)
-    metadata = get_doi_from_url(url)
+    metadata = get_metadata(doi=doi)
+    # metadata = get_doi_from_url(url)
     if metadata:
         print(json.dumps(metadata, indent=4))
     else:
